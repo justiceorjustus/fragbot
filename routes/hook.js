@@ -12,9 +12,21 @@ const router = express.Router();
 app.use(bodyParser.json());
 
 app.post('/hook', function (req, res) {
+    if (!req.app.locals.tvMessages) {
+        req.app.locals.tvMessages = new Array();
+    }
+    
+
     var body = req.body;
 
-    console.log(body);
+    body.TimeStamp = Date();
+    body.Id = req.app.locals.tvMessages.length + 1;
+
+    tvMessages.push(body);
+
+    //req.app.locals.tvMessages.push(body);
+
+    console.log(tvMessages);
 
     res.json({
         message: 'ok got it!'
