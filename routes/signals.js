@@ -10,7 +10,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   res.setHeader('Content-Type', 'application/json');
   // var messages = req.app.locals.tvMessages;
-  res.end(JSON.stringify(tvMessages));
+  res.end(JSON.stringify(tvMessages.slice(-10)));
 });
 
 module.exports = router;

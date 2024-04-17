@@ -11,19 +11,17 @@ const router = express.Router();
 
 app.use(bodyParser.json());
 
-app.get('/hook', function (req, res) { // changed from get to post TODO TEST
-    if (!req.app.locals.tvMessages) {
-        req.app.locals.tvMessages = new Array();
-    }    
-
+app.post('/botstatus', function (req, res) {
     var body = req.body;
 
-    body.hookTimestamp = Date.now();
-    body.id = tvMessages.length + 1;
+    body.TimeStamp = Date();
+    body.Id = tvMessages.length + 1;
 
     tvMessages.push(body);
 
     //req.app.locals.tvMessages.push(body);
+    
+    // prevent pyramid orders
 
     console.log(body);
 
