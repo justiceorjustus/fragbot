@@ -11,7 +11,7 @@ const router = express.Router();
 
 app.use(bodyParser.json());
 
-app.get('/hook', function (req, res) { // changed from get to post TODO TEST
+app.post('/hook', function (req, res) {
     if (!req.app.locals.tvMessages) {
         req.app.locals.tvMessages = new Array();
     }    
