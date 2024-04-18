@@ -3,7 +3,7 @@ var express = require('express');// https://stackoverflow.com/questions/27852631
 var express = require('express'),
     bodyParser = require('body-parser'),
     app = express(),
-    port = 5000;
+    port = 80;
 var router = express.Router();
 
 /* GET signals. */
