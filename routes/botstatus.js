@@ -3,7 +3,7 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
     app = express(),
-    port = 80;
+    port = 3000;
 
 // https://stackoverflow.com/questions/27465850/typeerror-router-use-requires-middleware-function-but-got-a-object
 
