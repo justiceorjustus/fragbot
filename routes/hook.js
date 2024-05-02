@@ -29,7 +29,7 @@ app.post("/hook", function (req, res) {
 
   if (ws) {
     ws.send(JSON.stringify(body));
-    console.log("Message sent);
+    console.log("Message sent");
   }
 
   // res.json({
