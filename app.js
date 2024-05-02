@@ -58,8 +58,8 @@ const server = require("http").createServer(app);
 const wss = new WebSocket.Server({ server: server, path: "/orders" });
 wss.on("connection", function connection(socket) {
   ws = socket;
-  console.log("A new client Connected!");
-  ws.send("Welcome New Client!");
+  console.log("Client connected!");
+  ws.send("Connected.");
 
   ws.on("message", function incoming(message) {
     console.log("received: %s", message);
@@ -72,9 +72,9 @@ wss.on("connection", function connection(socket) {
   });
 });
 
-app.get("/", (req, res) => res.send("Hello World!"));
+app.get("/orders", (req, res) => res.send("Hello World!"));
 
-server.listen(3333, () => console.log(`Lisening on port :3333`));
+server.listen(3000, () => console.log(`Wehsockets listening on port :3000`));
 
 module.exports = app;
 
