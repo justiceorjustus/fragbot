@@ -3,7 +3,7 @@
 var express = require("express"),
   bodyParser = require("body-parser"),
   app = express(),
-  port = 5000; // TODO CHANGE TO 80
+  port = 80; // 80 FOR PRODUCTION, 5000 FOR LOCAL TODO: MAKE THIS AUTOMATIC
 
 // https://stackoverflow.com/questions/27465850/typeerror-router-use-requires-middleware-function-but-got-a-object
 
