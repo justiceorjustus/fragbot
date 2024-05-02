@@ -3,7 +3,7 @@
 var express = require("express"),
   bodyParser = require("body-parser"),
   app = express(),
-  port = 80;
+  port = 5000; // TODO CHANGE TO 80
 
 // https://stackoverflow.com/questions/27465850/typeerror-router-use-requires-middleware-function-but-got-a-object
 
@@ -27,9 +27,14 @@ app.post("/hook", function (req, res) {
 
   console.log(body);
 
-  res.json({
-    message: "ok got it!",
-  });
+  if (ws) {
+    ws.send(body);
+    console.log("msg sent", body);
+  }
+
+  // res.json({
+  //   message: "ok got it!",
+  // });
 });
 
 var server = app.listen(port, function () {
