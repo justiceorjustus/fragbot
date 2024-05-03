@@ -25,11 +25,15 @@ app.post("/hook", function (req, res) {
 
   //req.app.locals.tvMessages.push(body);
 
-  console.log(body);
+  // console.log(body);
 
-  if (ws) {
-    ws.send(JSON.stringify(body));
-    console.log("Message sent");
+  if (wss && ws) {
+    wss.clients.forEach(function each(client) {
+      if (client !== ws && client.readyState === WebSocket.OPEN) {
+        client.send(JSON.stringify(body), { isBinary: true });
+      }
+    });
+    console.log("Sent:", JSON.stringify(body));
   }
 
   // res.json({
