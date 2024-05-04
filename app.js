@@ -55,7 +55,7 @@ app.use(function (err, req, res, next) {
 ws = undefined;
 
 const server = require("http").createServer(app);
-const wss = new WebSocket.Server({ server: server, path: "/orders" });
+wss = new WebSocket.Server({ server: server, path: "/orders" });
 wss.on("connection", function connection(socket) {
   ws = socket;
   console.log("Client connected! Total clients: " + wss.clients.size);
