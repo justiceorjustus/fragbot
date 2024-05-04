@@ -33,11 +33,13 @@ app.post("/hook", function (req, res) {
   //   console.log("Message sent");
   // }
   if (wss && ws) {
-    wss.clients.forEach(function each(client) {
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
-        client.send(JSON.stringify(body), { isBinary: true });
-      }
-    });
+    // wss.clients.forEach(function each(client) {
+    //   if (client !== ws && client.readyState === WebSocket.OPEN) {
+    //     client.send(JSON.stringify(body), { isBinary: true });
+    //   }
+    // });
+
+    wss.broadcast(JSON.stringify(body));
     console.log("Sent:", JSON.stringify(body));
   }
 

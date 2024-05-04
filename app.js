@@ -72,6 +72,14 @@ wss.on("connection", function connection(socket) {
   });
 });
 
+// https://stackoverflow.com/questions/45301672/how-to-send-broadcast-to-all-connected-client-in-node-js
+wss.broadcast = function broadcast(msg) {
+  console.log(msg);
+  wss.clients.forEach(function each(client) {
+    client.send(msg);
+  });
+};
+
 app.get("/orders", (req, res) => res.send("Hello World!"));
 
 server.listen(3000, () => console.log(`Wehsockets listening on port :3000`));
