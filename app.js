@@ -83,7 +83,7 @@ wss.broadcast = function broadcast(msg) {
 app.get("/orders", (req, res) => res.send("Hello World!"));
 
 // server.listen(443, () => console.log(`Wehsockets listening on port :3000`));
-// server.listen(3000, () => console.log(`Wehsockets listening on port :3000`));
+server.listen(3000, () => console.log(`Websockets listening on port :3000`));
 
 module.exports = app;
 
