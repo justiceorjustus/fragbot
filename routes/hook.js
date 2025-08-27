@@ -17,6 +17,9 @@ app.post("/hook", function (req, res) {
     req.app.locals.tvMessages = new Array();
   }
 
+  const ipAddress = req.headers["x-forwarded-for"]; //req.ip || req.connection.remoteAddress;
+  console.log("From IP:", ipAddress);
+
   var body = req.body;
 
   body.hookTimestamp = Date.now();
