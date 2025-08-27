@@ -3,7 +3,8 @@
 var express = require("express"),
   bodyParser = require("body-parser"),
   app = express(),
-  port = 80;
+  port = 80; // 80 FOR PRODUCTION, 5000 FOR LOCAL TODO: MAKE THIS AUTOMATIC
+const WebSocket = require("ws");
 
 // https://stackoverflow.com/questions/27465850/typeerror-router-use-requires-middleware-function-but-got-a-object
 
@@ -16,6 +17,9 @@ app.post("/hook", function (req, res) {
     req.app.locals.tvMessages = new Array();
   }
 
+  const ipAddress = req.headers["x-forwarded-for"]; //req.ip || req.connection.remoteAddress;
+  console.log("From IP:", ipAddress);
+
   var body = req.body;
 
   body.hookTimestamp = Date.now();
@@ -27,9 +31,24 @@ app.post("/hook", function (req, res) {
 
   console.log(body);
 
-  res.json({
-    message: "ok got it!",
-  });
+  // if (ws) {
+  //   ws.send(JSON.stringify(body));
+  //   console.log("Message sent");
+  // }
+  if (wss && ws) {
+    // wss.clients.forEach(function each(client) {
+    //   if (client !== ws && client.readyState === WebSocket.OPEN) {
+    //     client.send(JSON.stringify(body), { isBinary: true });
+    //   }
+    // });
+
+    wss.broadcast(JSON.stringify(body));
+    console.log("Sent:", JSON.stringify(body));
+  }
+
+  // res.json({
+  //   message: "ok got it!",
+  // });
 });
 
 var server = app.listen(port, function () {

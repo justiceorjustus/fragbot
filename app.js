@@ -13,6 +13,7 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var hookRouter = require("./routes/hook");
 var signalsRouter = require("./routes/signals");
+// var ordersRouter = require("./routes/orders");
 
 var app = express();
 
@@ -32,6 +33,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/hook", hookRouter);
 app.use("/signals", signalsRouter);
+// app.use("/orders", ordersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -48,6 +50,40 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render("error");
 });
+
+// https://www.youtube.com/watch?v=wV-fDdHhGqs&ab_channel=Vuka
+ws = undefined;
+
+const server = require("http").createServer(app);
+wss = new WebSocket.Server({ server: server, path: "/orders" });
+wss.on("connection", function connection(socket) {
+  ws = socket;
+  console.log("Client connected! Total clients: " + wss.clients.size);
+  ws.send("Connected.");
+
+  ws.on("message", function incoming(message) {
+    console.log("received: %s", message);
+
+    wss.clients.forEach(function each(client) {
+      if (client !== ws && client.readyState === WebSocket.OPEN) {
+        client.send(message);
+      }
+    });
+  });
+});
+
+// https://stackoverflow.com/questions/45301672/how-to-send-broadcast-to-all-connected-client-in-node-js
+wss.broadcast = function broadcast(msg) {
+  console.log(msg);
+  wss.clients.forEach(function each(client) {
+    client.send(msg);
+  });
+};
+
+app.get("/orders", (req, res) => res.send("Hello World!"));
+
+server.listen(80, () => console.log(`Wehsockets listening on port :3000`));
+// server.listen(3000, () => console.log(`Wehsockets listening on port :3000`));
 
 module.exports = app;
 
